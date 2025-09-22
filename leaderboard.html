@@ -315,7 +315,7 @@ tbody tr:nth-child(even) { background: #f9f9f9; }
         <tr style="background: #f9f9f9;">
           <td style="padding: 8px; font-weight: 500; vertical-align: top;">Termination Error</td>
           <td style="padding: 8px; white-space: normal; word-wrap: break-word;">
-            A violation of JPF’s <code>TerminationProperty</code>, which forces JPF to terminate. This occurs if there are errors in JPF or in the system.
+            This error occurs during Java program execution in JPF, which originate not from the program itself but from JPF (e.g., failing to instantiate program variables) or from the runtime environment (e.g., system crashes caused by excessive resource usage from JPF), cause JPF to stop execution.
           </td>
         </tr>
       </tbody>
