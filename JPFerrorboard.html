@@ -77,31 +77,31 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
   <script>
     const rows = [
-      {Model:'claude-opus-4-1', Deadlock:1, RuntimeException:14, NoEntryMethod:0, SingleThread:0, TerminationError:0},
-      {Model:'codellama:34b', Deadlock:1, RuntimeException:1, NoEntryMethod:6, SingleThread:0, TerminationError:0},
-      {Model:'codeqwen:7b', Deadlock:2, RuntimeException:4, NoEntryMethod:4, SingleThread:0, TerminationError:0},
-      {Model:'codestral:22b', Deadlock:1, RuntimeException:2, NoEntryMethod:2, SingleThread:0, TerminationError:3},
-      {Model:'deepseek-r1:32b', Deadlock:0, RuntimeException:3, NoEntryMethod:0, SingleThread:0, TerminationError:6},
-      {Model:'dolphin3:8b', Deadlock:3, RuntimeException:1, NoEntryMethod:0, SingleThread:0, TerminationError:1},
-      {Model:'gemma2:27b', Deadlock:1, RuntimeException:6, NoEntryMethod:0, SingleThread:0, TerminationError:1},
-      {Model:'gpt-4o', Deadlock:1, RuntimeException:9, NoEntryMethod:0, SingleThread:0, TerminationError:0},
-      {Model:'gpt-5', Deadlock:1, RuntimeException:5, NoEntryMethod:0, SingleThread:0, TerminationError:0},
-      {Model:'llama3.3:70b', Deadlock:1, RuntimeException:3, NoEntryMethod:1, SingleThread:0, TerminationError:1},
+      {Model:'claude-opus-4-1', Deadlock:1, RuntimeException:13, NoEntryMethod:0, SingleThread:1, TerminationError:0},
+      {Model:'codellama:34b', Deadlock:1, RuntimeException:0, NoEntryMethod:6, SingleThread:1, TerminationError:0},
+      {Model:'codeqwen:7b', Deadlock:2, RuntimeException:3, NoEntryMethod:4, SingleThread:1, TerminationError:0},
+      {Model:'codestral:22b', Deadlock:1, RuntimeException:1, NoEntryMethod:2, SingleThread:1, TerminationError:3},
+      {Model:'deepseek-r1:32b', Deadlock:0, RuntimeException:2, NoEntryMethod:0, SingleThread:1, TerminationError:6},
+      {Model:'dolphin3:8b', Deadlock:3, RuntimeException:0, NoEntryMethod:0, SingleThread:1, TerminationError:1},
+      {Model:'gemma2:27b', Deadlock:1, RuntimeException:4, NoEntryMethod:0, SingleThread:2, TerminationError:1},
+      {Model:'gpt-4o', Deadlock:1, RuntimeException:8, NoEntryMethod:0, SingleThread:1, TerminationError:0},
+      {Model:'gpt-5', Deadlock:1, RuntimeException:4, NoEntryMethod:0, SingleThread:1, TerminationError:0},
+      {Model:'llama3.3:70b', Deadlock:1, RuntimeException:2, NoEntryMethod:1, SingleThread:1, TerminationError:1},
       {Model:'llava:34b', Deadlock:0, RuntimeException:0, NoEntryMethod:0, SingleThread:0, TerminationError:1},
       {Model:'magicoder:7b', Deadlock:2, RuntimeException:0, NoEntryMethod:2, SingleThread:2, TerminationError:2},
-      {Model:'mistral:7b', Deadlock:0, RuntimeException:3, NoEntryMethod:1, SingleThread:0, TerminationError:2},
-      {Model:'mixtral:8x7b', Deadlock:0, RuntimeException:4, NoEntryMethod:0, SingleThread:0, TerminationError:8},
+      {Model:'mistral:7b', Deadlock:0, RuntimeException:2, NoEntryMethod:1, SingleThread:1, TerminationError:2},
+      {Model:'mixtral:8x7b', Deadlock:0, RuntimeException:1, NoEntryMethod:0, SingleThread:3, TerminationError:8},
       {Model:'opencoder:8b', Deadlock:2, RuntimeException:1, NoEntryMethod:1, SingleThread:0, TerminationError:4},
-      {Model:'phi4:14b', Deadlock:2, RuntimeException:1, NoEntryMethod:0, SingleThread:0, TerminationError:0},
-      {Model:'phind-codellama:34b', Deadlock:0, RuntimeException:6, NoEntryMethod:2, SingleThread:2, TerminationError:2},
-      {Model:'qwen3:32b', Deadlock:0, RuntimeException:1, NoEntryMethod:0, SingleThread:0, TerminationError:11},
+      {Model:'phi4:14b', Deadlock:2, RuntimeException:0, NoEntryMethod:0, SingleThread:1, TerminationError:0},
+      {Model:'phind-codellama:34b', Deadlock:0, RuntimeException:5, NoEntryMethod:2, SingleThread:3, TerminationError:2},
+      {Model:'qwen3:32b', Deadlock:0, RuntimeException:0, NoEntryMethod:0, SingleThread:1, TerminationError:11},
       {Model:'starcoder2:15b', Deadlock:0, RuntimeException:0, NoEntryMethod:2, SingleThread:4, TerminationError:0},
-      {Model:'vicuna:33b', Deadlock:0, RuntimeException:2, NoEntryMethod:1, SingleThread:0, TerminationError:0},
-      {Model:'wizardcoder:33b', Deadlock:2, RuntimeException:6, NoEntryMethod:0, SingleThread:1, TerminationError:5},
+      {Model:'vicuna:33b', Deadlock:0, RuntimeException:1, NoEntryMethod:1, SingleThread:1, TerminationError:0},
+      {Model:'wizardcoder:33b', Deadlock:2, RuntimeException:5, NoEntryMethod:0, SingleThread:2, TerminationError:5},
       {Model:'zephyr:7b', Deadlock:0, RuntimeException:1, NoEntryMethod:0, SingleThread:0, TerminationError:0},
     ];
 
-    const totals = {Deadlock:20, RuntimeException:73, NoEntryMethod:22, SingleThread:9, TerminationError:47};
+    const totals = {Deadlock:20, RuntimeException:53, NoEntryMethod:22, SingleThread:29, TerminationError:47};
 
     const tbody = document.getElementById('tbody');
     function renderRows(filterText = '', sortKey = null, sortDesc = false){
