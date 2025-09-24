@@ -398,52 +398,52 @@ tbody tr:nth-child(even) { background: #f9f9f9; }
 <script>
 // result data
 const dataPass1 = [
-  {Model:"gpt-5", CompilationErrors:4, JPFErrors:6, Passes:33, PassingRate:"33/43 (76.74%)", CodeBLEUAll:0.587507, CodeBLEUPass:0.590720},
-  {Model:"claude-opus-4-1", CompilationErrors:0, JPFErrors:15, Passes:28, PassingRate:"28/43 (65.12%)", CodeBLEUAll:0.584580, CodeBLEUPass:0.590718},
-  {Model:"gpt-4o", CompilationErrors:6, JPFErrors:10, Passes:27, PassingRate:"27/43 (62.79%)", CodeBLEUAll:0.559714, CodeBLEUPass:0.564741},
-  {Model:"phi4:14b", CompilationErrors:17, JPFErrors:3, Passes:23, PassingRate:"23/43 (53.49%)", CodeBLEUAll:0.555917, CodeBLEUPass:0.554652},
-  {Model:"llama3.3:70b", CompilationErrors:15, JPFErrors:6, Passes:22, PassingRate:"22/43 (51.16%)", CodeBLEUAll:0.513822, CodeBLEUPass:0.508752},
-  {Model:"qwen3:32b", CompilationErrors:10, JPFErrors:12, Passes:21, PassingRate:"21/43 (48.84%)", CodeBLEUAll:0.533032, CodeBLEUPass:0.545166},
-  {Model:"codestral:22b", CompilationErrors:16, JPFErrors:8, Passes:19, PassingRate:"19/43 (44.19%)", CodeBLEUAll:0.489677, CodeBLEUPass:0.497187},
-  {Model:"opencoder:8b", CompilationErrors:18, JPFErrors:8, Passes:17, PassingRate:"17/43 (39.53%)", CodeBLEUAll:0.493470, CodeBLEUPass:0.494085},
-  {Model:"deepseek-r1:32b", CompilationErrors:18, JPFErrors:9, Passes:16, PassingRate:"16/43 (37.21%)", CodeBLEUAll:0.548415, CodeBLEUPass:0.541650},
-  {Model:"wizardcoder:33b", CompilationErrors:13, JPFErrors:14, Passes:16, PassingRate:"16/43 (37.21%)", CodeBLEUAll:0.481709, CodeBLEUPass:0.503010},
-  {Model:"mixtral:8x7b", CompilationErrors:18, JPFErrors:12, Passes:13, PassingRate:"13/43 (30.23%)", CodeBLEUAll:0.516452, CodeBLEUPass:0.549658},
-  {Model:"dolphin3:8b", CompilationErrors:25, JPFErrors:5, Passes:13, PassingRate:"13/43 (30.23%)", CodeBLEUAll:0.511836, CodeBLEUPass:0.519170},
-  {Model:"gemma2:27b", CompilationErrors:22, JPFErrors:8, Passes:13, PassingRate:"13/43 (30.23%)", CodeBLEUAll:0.482517, CodeBLEUPass:0.493698},
-  {Model:"phind-codellama:34b", CompilationErrors:19, JPFErrors:12, Passes:12, PassingRate:"12/43 (27.91%)", CodeBLEUAll:0.461227, CodeBLEUPass:0.450440},
-  {Model:"codeqwen:7b", CompilationErrors:26, JPFErrors:10, Passes:7, PassingRate:"7/43 (16.28%)", CodeBLEUAll:0.466267, CodeBLEUPass:0.442896},
-  {Model:"magicoder:7b", CompilationErrors:28, JPFErrors:8, Passes:7, PassingRate:"7/43 (16.28%)", CodeBLEUAll:0.445773, CodeBLEUPass:0.476500},
-  {Model:"llava:34b", CompilationErrors:37, JPFErrors:1, Passes:5, PassingRate:"5/43 (11.63%)", CodeBLEUAll:0.484219, CodeBLEUPass:0.499599},
-  {Model:"vicuna:33b", CompilationErrors:35, JPFErrors:3, Passes:5, PassingRate:"5/43 (11.63%)", CodeBLEUAll:0.446593, CodeBLEUPass:0.487217},
-  {Model:"mistral:7b", CompilationErrors:34, JPFErrors:6, Passes:3, PassingRate:"3/43 (6.98%)", CodeBLEUAll:0.513751, CodeBLEUPass:0.487401},
-  {Model:"zephyr:7b", CompilationErrors:40, JPFErrors:1, Passes:2, PassingRate:"2/43 (4.65%)", CodeBLEUAll:0.526529, CodeBLEUPass:0.564838},
-  {Model:"starcoder2:15b", CompilationErrors:35, JPFErrors:6, Passes:2, PassingRate:"2/43 (4.65%)", CodeBLEUAll:0.428584, CodeBLEUPass:0.441152},
-  {Model:"codellama:34b", CompilationErrors:35, JPFErrors:8, Passes:0, PassingRate:"0/43 (0.00%)", CodeBLEUAll:0.447361, CodeBLEUPass:0.000000}
+  {Model:"claude-opus-4-1", CompilationErrors:0, JPFErrors:16, Passes:27, PassingRate:"27/43 (62.79%)", CodeBLEUAll:0.588989},
+  {Model:"codellama:34b", CompilationErrors:35, JPFErrors:8, Passes:0, PassingRate:"0/43 (0.00%)", CodeBLEUAll:0.445282},
+  {Model:"codeqwen:7b", CompilationErrors:26, JPFErrors:11, Passes:6, PassingRate:"6/43 (13.95%)", CodeBLEUAll:0.466210},
+  {Model:"codestral:22b", CompilationErrors:16, JPFErrors:11, Passes:16, PassingRate:"16/43 (37.21%)", CodeBLEUAll:0.487755},
+  {Model:"deepseek-r1:32b", CompilationErrors:18, JPFErrors:13, Passes:12, PassingRate:"12/43 (27.91%)", CodeBLEUAll:0.548819},
+  {Model:"dolphin3:8b", CompilationErrors:25, JPFErrors:8, Passes:10, PassingRate:"10/43 (23.26%)", CodeBLEUAll:0.511915},
+  {Model:"gemma2:27b", CompilationErrors:22, JPFErrors:9, Passes:12, PassingRate:"12/43 (27.91%)", CodeBLEUAll:0.486252},
+  {Model:"gpt-4o", CompilationErrors:6, JPFErrors:14, Passes:23, PassingRate:"23/43 (53.49%)", CodeBLEUAll:0.563879},
+  {Model:"gpt-5", CompilationErrors:4, JPFErrors:8, Passes:31, PassingRate:"31/43 (72.09%)", CodeBLEUAll:0.585806},
+  {Model:"llama3.3:70b", CompilationErrors:15, JPFErrors:8, Passes:20, PassingRate:"20/43 (46.51%)", CodeBLEUAll:0.515749},
+  {Model:"llava:34b", CompilationErrors:37, JPFErrors:2, Passes:4, PassingRate:"4/43 (9.30%)", CodeBLEUAll:0.483585},
+  {Model:"magicoder:7b", CompilationErrors:28, JPFErrors:8, Passes:7, PassingRate:"7/43 (16.28%)", CodeBLEUAll:0.445733},
+  {Model:"mistral:7b", CompilationErrors:34, JPFErrors:7, Passes:2, PassingRate:"2/43 (4.65%)", CodeBLEUAll:0.514027},
+  {Model:"mixtral:8x7b", CompilationErrors:18, JPFErrors:12, Passes:13, PassingRate:"13/43 (30.23%)", CodeBLEUAll:0.515187},
+  {Model:"opencoder:8b", CompilationErrors:18, JPFErrors:10, Passes:15, PassingRate:"15/43 (34.88%)", CodeBLEUAll:0.492801},
+  {Model:"phi4:14b", CompilationErrors:17, JPFErrors:7, Passes:19, PassingRate:"19/43 (44.19%)", CodeBLEUAll:0.554407},
+  {Model:"phind-codellama:34b", CompilationErrors:19, JPFErrors:13, Passes:11, PassingRate:"11/43 (25.58%)", CodeBLEUAll:0.461113},
+  {Model:"qwen3:32b", CompilationErrors:10, JPFErrors:15, Passes:18, PassingRate:"18/43 (41.86%)", CodeBLEUAll:0.534481},
+  {Model:"starcoder2:15b", CompilationErrors:28, JPFErrors:12, Passes:3, PassingRate:"3/43 (6.98%)", CodeBLEUAll:0.346492},
+  {Model:"vicuna:33b", CompilationErrors:35, JPFErrors:3, Passes:5, PassingRate:"5/43 (11.63%)", CodeBLEUAll:0.446508},
+  {Model:"wizardcoder:33b", CompilationErrors:13, JPFErrors:15, Passes:15, PassingRate:"15/43 (34.88%)", CodeBLEUAll:0.481291},
+  {Model:"zephyr:7b", CompilationErrors:40, JPFErrors:1, Passes:2, PassingRate:"2/43 (4.65%)", CodeBLEUAll:0.525565}
 ];
 const dataPass3 = [
-  {Model:"claude-opus-4-1", CompilationErrors:0, JPFErrors:4, Passes:39, PassingRate:"39/43 (90.70%)", CodeBLEUAll:0.585045, CodeBLEUPass:0.592410},
-  {Model:"qwen3:32b", CompilationErrors:0, JPFErrors:7, Passes:36, PassingRate:"36/43 (83.72%)", CodeBLEUAll:0.552070, CodeBLEUPass:0.546906},
-  {Model:"gpt-4o", CompilationErrors:2, JPFErrors:7, Passes:34, PassingRate:"34/43 (79.07%)", CodeBLEUAll:0.554107, CodeBLEUPass:0.565113},
-  {Model:"phi4:14b", CompilationErrors:3, JPFErrors:6, Passes:34, PassingRate:"34/43 (79.07%)", CodeBLEUAll:0.542917, CodeBLEUPass:0.534740},
-  {Model:"gpt-5", CompilationErrors:0, JPFErrors:10, Passes:33, PassingRate:"33/43 (76.74%)", CodeBLEUAll:0.584362, CodeBLEUPass:0.591823},
-  {Model:"deepseek-r1:32b", CompilationErrors:7, JPFErrors:4, Passes:32, PassingRate:"32/43 (74.42%)", CodeBLEUAll:0.548317, CodeBLEUPass:0.544580},
-  {Model:"codestral:22b", CompilationErrors:6, JPFErrors:6, Passes:31, PassingRate:"31/43 (72.09%)", CodeBLEUAll:0.479179, CodeBLEUPass:0.495106},
-  {Model:"wizardcoder:33b", CompilationErrors:4, JPFErrors:9, Passes:30, PassingRate:"30/43 (69.77%)", CodeBLEUAll:0.476069, CodeBLEUPass:0.476771},
-  {Model:"opencoder:8b", CompilationErrors:9, JPFErrors:6, Passes:28, PassingRate:"28/43 (65.12%)", CodeBLEUAll:0.494950, CodeBLEUPass:0.471892},
-  {Model:"llama3.3:70b", CompilationErrors:12, JPFErrors:4, Passes:27, PassingRate:"27/43 (62.79%)", CodeBLEUAll:0.513331, CodeBLEUPass:0.511387},
-  {Model:"phind-codellama:34b", CompilationErrors:9, JPFErrors:10, Passes:24, PassingRate:"24/43 (55.81%)", CodeBLEUAll:0.466543, CodeBLEUPass:0.470994},
-  {Model:"codeqwen:7b", CompilationErrors:16, JPFErrors:7, Passes:20, PassingRate:"20/43 (46.51%)", CodeBLEUAll:0.472215, CodeBLEUPass:0.490967},
-  {Model:"dolphin3:8b", CompilationErrors:18, JPFErrors:7, Passes:18, PassingRate:"18/43 (41.86%)", CodeBLEUAll:0.501805, CodeBLEUPass:0.520012},
-  {Model:"gemma2:27b", CompilationErrors:19, JPFErrors:8, Passes:16, PassingRate:"16/43 (37.21%)", CodeBLEUAll:0.491610, CodeBLEUPass:0.490183},
-  {Model:"mixtral:8x7b", CompilationErrors:10, JPFErrors:18, Passes:15, PassingRate:"15/43 (34.88%)", CodeBLEUAll:0.500697, CodeBLEUPass:0.559218},
-  {Model:"magicoder:7b", CompilationErrors:19, JPFErrors:12, Passes:12, PassingRate:"12/43 (27.91%)", CodeBLEUAll:0.441981, CodeBLEUPass:0.457410},
-  {Model:"codellama:34b", CompilationErrors:19, JPFErrors:12, Passes:12, PassingRate:"12/43 (27.91%)", CodeBLEUAll:0.432681, CodeBLEUPass:0.461124},
-  {Model:"starcoder2:15b", CompilationErrors:10, JPFErrors:25, Passes:8, PassingRate:"8/43 (18.60%)", CodeBLEUAll:0.382847, CodeBLEUPass:0.438898},
-  {Model:"llava:34b", CompilationErrors:31, JPFErrors:4, Passes:8, PassingRate:"8/43 (18.60%)", CodeBLEUAll:0.462730, CodeBLEUPass:0.466870},
-  {Model:"vicuna:33b", CompilationErrors:28, JPFErrors:7, Passes:8, PassingRate:"8/43 (18.60%)", CodeBLEUAll:0.461179, CodeBLEUPass:0.465669},
-  {Model:"mistral:7b", CompilationErrors:30, JPFErrors:5, Passes:8, PassingRate:"8/43 (18.60%)", CodeBLEUAll:0.511657, CodeBLEUPass:0.541255},
-  {Model:"zephyr:7b", CompilationErrors:32, JPFErrors:6, Passes:5, PassingRate:"5/43 (11.63%)", CodeBLEUAll:0.546725, CodeBLEUPass:0.505840}
+  {Model:"claude-opus-4-1-20250805", CompilationErrors:0, JPFErrors:6, Passes:37, PassingRate:"37/43 (86.05%)", CodeBLEUAll:0.593595},
+  {Model:"codellama:34b", CompilationErrors:19, JPFErrors:13, Passes:11, PassingRate:"11/43 (25.58%)", CodeBLEUAll:0.463660},
+  {Model:"codeqwen:7b", CompilationErrors:16, JPFErrors:9, Passes:18, PassingRate:"18/43 (41.86%)", CodeBLEUAll:0.497107},
+  {Model:"codestral:22b", CompilationErrors:6, JPFErrors:8, Passes:29, PassingRate:"29/43 (67.44%)", CodeBLEUAll:0.668762},
+  {Model:"deepseek-r1:32b", CompilationErrors:7, JPFErrors:6, Passes:30, PassingRate:"30/43 (69.77%)", CodeBLEUAll:0.549887},
+  {Model:"dolphin3:8b", CompilationErrors:18, JPFErrors:7, Passes:18, PassingRate:"18/43 (41.86%)", CodeBLEUAll:0.597928},
+  {Model:"gemma2:27b", CompilationErrors:19, JPFErrors:10, Passes:14, PassingRate:"14/43 (32.56%)", CodeBLEUAll:0.498632},
+  {Model:"gpt-4o", CompilationErrors:2, JPFErrors:7, Passes:34, PassingRate:"34/43 (79.07%)", CodeBLEUAll:0.724407},
+  {Model:"gpt-5", CompilationErrors:0, JPFErrors:11, Passes:32, PassingRate:"32/43 (74.42%)", CodeBLEUAll:0.638047},
+  {Model:"llama3.3:70b", CompilationErrors:12, JPFErrors:6, Passes:25, PassingRate:"25/43 (58.14%)", CodeBLEUAll:0.567018},
+  {Model:"llava:34b", CompilationErrors:31, JPFErrors:4, Passes:8, PassingRate:"8/43 (18.60%)", CodeBLEUAll:0.466870},
+  {Model:"magicoder:7b", CompilationErrors:19, JPFErrors:12, Passes:12, PassingRate:"12/43 (27.91%)", CodeBLEUAll:0.457410},
+  {Model:"mistral:7b", CompilationErrors:30, JPFErrors:7, Passes:6, PassingRate:"6/43 (13.95%)", CodeBLEUAll:0.543555},
+  {Model:"mixtral:8x7b", CompilationErrors:10, JPFErrors:18, Passes:15, PassingRate:"15/43 (34.88%)", CodeBLEUAll:0.559218},
+  {Model:"opencoder:8b", CompilationErrors:9, JPFErrors:8, Passes:26, PassingRate:"26/43 (60.47%)", CodeBLEUAll:0.537506},
+  {Model:"phi4:14b", CompilationErrors:3, JPFErrors:7, Passes:33, PassingRate:"33/43 (76.74%)", CodeBLEUAll:0.578995},
+  {Model:"phind-codellama:34b", CompilationErrors:9, JPFErrors:11, Passes:23, PassingRate:"23/43 (53.49%)", CodeBLEUAll:0.538943},
+  {Model:"qwen3:32b", CompilationErrors:0, JPFErrors:9, Passes:34, PassingRate:"34/43 (79.07%)", CodeBLEUAll:0.597609},
+  {Model:"starcoder2:15b", CompilationErrors:10, JPFErrors:25, Passes:8, PassingRate:"8/43 (18.60%)", CodeBLEUAll:0.438898},
+  {Model:"vicuna:33b", CompilationErrors:28, JPFErrors:7, Passes:8, PassingRate:"8/43 (18.60%)", CodeBLEUAll:0.465669},
+  {Model:"wizardcoder:33b", CompilationErrors:4, JPFErrors:10, Passes:29, PassingRate:"29/43 (67.44%)", CodeBLEUAll:0.686790},
+  {Model:"zephyr:7b", CompilationErrors:32, JPFErrors:7, Passes:4, PassingRate:"4/43 (9.30%)", CodeBLEUAll:0.499297}
 ];
 const dataComparison = dataPass1.map(p1 => {
   const p3 = dataPass3.find(d => d.Model === p1.Model);
@@ -472,14 +472,13 @@ function renderTable() {
   filteredData.sort((a,b)=>{
     let valA = a[sortKey], valB = b[sortKey];
     if(sortKey==='PassingRate'){
-    valA = parseFloat(valA.match(/\(([\d.]+)%\)/)[1]);
-    valB = parseFloat(valB.match(/\(([\d.]+)%\)/)[1]);
-}
+      valA = parseFloat(valA.match(/\(([\d.]+)%\)/)[1]);
+      valB = parseFloat(valB.match(/\(([\d.]+)%\)/)[1]);
+    }
     if(typeof valA==='string') valA = valA.toLowerCase();
     if(typeof valB==='string') valB = valB.toLowerCase();
     if(valA < valB) return ascending ? -1 : 1;
     if(valA > valB) return ascending ? 1 : -1;
-
     return 0;
   });
 
@@ -488,10 +487,7 @@ function renderTable() {
     const tr = document.createElement('tr');
     if(currentTableId==='comparison'){
       tr.innerHTML = `<td>${r.Model}</td><td>${r.CompilationErrors}</td><td>${r.JPFErrors}</td>
-<!--<td>${r.Passes}</td>-->
-<td>${r.PassingRate}</td><td>${r.CodeBLEUAll}</td>
-<!--<td>${r.CodeBLEUPass}</td>-->
-`;
+<td>${r.PassingRate}</td><td>${r.CodeBLEUAll}</td>`;
     } else {
       const total = r.CompilationErrors + r.JPFErrors + r.Passes;
       const compPercent = total ? ((r.CompilationErrors/total)*100).toFixed(1) : 0;
@@ -503,10 +499,8 @@ function renderTable() {
         <td>${r.Model}</td>
         <td>${r.CompilationErrors}</td>
         <td>${r.JPFErrors}</td>
-<!--        <td>${r.Passes}</td>-->
         <td>${r.PassingRate}</td>
         <td>${r.CodeBLEUAll.toFixed(6)}</td>
-<!--        <td>${r.CodeBLEUPass.toFixed(6)}</td>-->
         <td>
           <div class="bar-container">
             <div class="bar compilation-errors" style="width:${compPercent}%">${compPercent}%</div>
