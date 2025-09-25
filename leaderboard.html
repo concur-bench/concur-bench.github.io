@@ -422,7 +422,7 @@ const dataPass1 = [
   {Model:"zephyr:7b", CompilationErrors:40, JPFErrors:1, Passes:2, PassingRate:"2/43 (4.65%)", CodeBLEUAll:0.525565}
 ];
 const dataPass3 = [
-  {Model:"claude-opus-4-1-20250805", CompilationErrors:0, JPFErrors:6, Passes:37, PassingRate:"37/43 (86.05%)", CodeBLEUAll:0.593595},
+  {Model:"claude-opus-4-1", CompilationErrors:0, JPFErrors:6, Passes:37, PassingRate:"37/43 (86.05%)", CodeBLEUAll:0.593595},
   {Model:"codellama:34b", CompilationErrors:19, JPFErrors:13, Passes:11, PassingRate:"11/43 (25.58%)", CodeBLEUAll:0.463660},
   {Model:"codeqwen:7b", CompilationErrors:16, JPFErrors:9, Passes:18, PassingRate:"18/43 (41.86%)", CodeBLEUAll:0.497107},
   {Model:"codestral:22b", CompilationErrors:6, JPFErrors:8, Passes:29, PassingRate:"29/43 (67.44%)", CodeBLEUAll:0.668762},
@@ -466,6 +466,7 @@ let ascending = false;
 
 function renderTable() {
   const tbody = document.getElementById(currentTableId).querySelector('tbody');
+  const thead = document.getElementById(currentTableId).querySelector('thead');
   const filter = document.getElementById('search').value.toLowerCase();
   const filteredData = currentData.filter(r => r.Model.toLowerCase().includes(filter));
 
@@ -483,8 +484,18 @@ function renderTable() {
   });
 
   tbody.innerHTML = '';
+
+  thead.querySelectorAll('th').forEach(th => {
+    if (currentTableId === 'pass3' && (th.dataset.key === 'CompilationErrors' || th.dataset.key === 'JPFErrors')) {
+      th.classList.add('hidden-column');
+    } else {
+      th.classList.remove('hidden-column');
+    }
+  });
+
   filteredData.forEach((r,i)=>{
     const tr = document.createElement('tr');
+
     if(currentTableId==='comparison'){
       tr.innerHTML = `<td>${r.Model}</td><td>${r.CompilationErrors}</td><td>${r.JPFErrors}</td>
 <td>${r.PassingRate}</td><td>${r.CodeBLEUAll}</td>`;
@@ -497,8 +508,8 @@ function renderTable() {
       tr.innerHTML = `
         <td>${i+1}</td>
         <td>${r.Model}</td>
-        <td>${r.CompilationErrors}</td>
-        <td>${r.JPFErrors}</td>
+        <td class="${currentTableId==='pass3' ? 'hidden-column' : ''}">${r.CompilationErrors}</td>
+        <td class="${currentTableId==='pass3' ? 'hidden-column' : ''}">${r.JPFErrors}</td>
         <td>${r.PassingRate}</td>
         <td>${r.CodeBLEUAll.toFixed(6)}</td>
         <td>
@@ -510,9 +521,11 @@ function renderTable() {
           </div>
         </td>`;
     }
+
     tbody.appendChild(tr);
   });
 }
+
 
 // Tabs switch
 document.querySelectorAll('.tab').forEach(tab=>{
