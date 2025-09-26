@@ -5,9 +5,6 @@
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>LLM Evaluation Comparison</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
-<!--<link rel="stylesheet" href="https://unpkg.com/element-plus/dist/index.css">-->
-<!--<script src="https://unpkg.com/vue@3"></script>-->
-<!--<script src="https://unpkg.com/element-plus"></script>-->
 <style>
 body {
   font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
@@ -20,16 +17,21 @@ header { margin-bottom: 24px; }
 h1 { font-size: 22px; margin: 0; font-weight: 600; }
 p.lead { margin: 6px 0 0; color: #555; font-size: 14px; }
 
-.tabs { display: flex; gap: 16px; margin-bottom: 12px; }
-.tab { padding: 10px 18px; border-radius: 8px 8px 0 0; background: #e0e0e0; cursor: pointer; font-weight: 500; transition: background 0.2s; }
-.tab.active { background: #fff; box-shadow: 0 -2px 4px rgba(0,0,0,0.08); }
-
 .card {
   background: #fff;
   border-radius: 12px;
   padding: 18px;
   border: 1px solid #e0e0e0;
   box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  margin-bottom: 24px;
+}
+
+.table-title {
+  text-align: center;
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 16px;
+  color: #333;
 }
 
 .controls { display: flex; gap: 8px; margin-bottom: 12px; }
@@ -38,25 +40,22 @@ p.lead { margin: 6px 0 0; color: #555; font-size: 14px; }
   border-radius: 8px;
   border: 1px solid #ccc;
   color: #222;
-  /*flex: 1 1 auto;*/
-  flex: none;
-  width: 25%;
-  margin: 0 auto 12px auto;
-  margin-left: 14%;
+  width: 250px;
+  display: block;
+  margin: 0 auto 16px auto;
   transition: border-color 0.2s;
 }
 .controls input[type="search"]:focus { border-color: #007bff; outline: none; }
 
 table {
-  width: 80%;
+  width: 70%;
   margin: 0 auto;
   border-collapse: collapse;
-  display: block;
+  display: table;
   overflow-x: auto;
   white-space: nowrap;
   scrollbar-width: thin;
   scrollbar-color: #b0b0b0 #f1f1f1;
-  margin-left: 14%;
 }
 table::-webkit-scrollbar { height: 10px; }
 table::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 8px; }
@@ -66,85 +65,70 @@ thead th {
   position: sticky;
   top: 0;
   background: #f0f2f5;
-  padding: 12px 10px;
+  padding: 10px 8px;
   text-align: left;
   font-size: 13px;
-  border-bottom: 1px solid #ddd;
+  font-weight: 600;
+  border-bottom: 2px solid #ddd;
   cursor: pointer;
   user-select: none;
 }
-tbody td { padding: 10px; font-size: 13px; border-bottom: 1px solid #eee; }
+
+thead th.header-group {
+  text-align: center;
+  border-bottom: 1px solid #ddd;
+  background: #e8eaf0;
+}
+
+thead th.sub-header {
+  text-align: center;
+  background: #f0f2f5;
+  font-weight: 500;
+}
+
+tbody td {
+  padding: 8px;
+  font-size: 13px;
+  border-bottom: 1px solid #eee;
+}
+
+tbody td:first-child {
+  text-align: center;
+  font-weight: 500;
+}
+
+tbody td.model-name {
+  font-weight: 500;
+}
+
+tbody td.numeric {
+  text-align: center;
+}
+
 tbody tr:nth-child(odd) { background: #fff; }
 tbody tr:nth-child(even) { background: #f9f9f9; }
 
-.hidden { display: none; }
+tbody tr:hover { background: #f0f6ff; }
 
-.bar-container {
-  display: flex;
-  height: 20px;
-  width: 150px;
-  border-radius: 8px;
-  overflow: hidden;
-  background: #f0f0f0;
-  font-size: 11px;
-  color: #fff;
-  position: relative;
-}
-.bar { height: 100%; text-align: center; line-height: 20px; white-space: nowrap; overflow: hidden; }
-.compilation-errors { background: #ff6b6b; }
-.jpf-errors { background: #ffa94d; }
-.passes { background: #51cf66; }
-
-/* Tooltip */
-.bar-container:hover .tooltip {
-  display: block;
-}
-.tooltip {
-  display: none;
-  position: absolute;
-  top: -26px;
-  left: 0;
-  background: rgba(0,0,0,0.75);
-  color: #fff;
-  padding: 2px 6px;
-  font-size: 11px;
-  border-radius: 4px;
-}
-
-.legend {
-  display: flex;
-  gap: 12px;
-  margin-bottom: 12px;
-  font-size: 13px;
-}
-.legend-item {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-}
-.legend-color {
-  width: 16px;
-  height: 16px;
-  border-radius: 4px;
-}
 .button-group a:hover {
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(0,0,0,0.2);
 }
-.compilation-color { background: #ff6b6b; }
-.jpf-color { background: #ffa94d; }
-.passes-color { background: #51cf66; }
-.hidden-column {
-  display: none;
+
+/* Updated styles for the static error table */
+.static-table thead th {
+  text-align: center !important;
+  font-weight: 600;
 }
-.copyBib {
-  display: none;
+
+.static-table tbody td:first-child {
+  white-space: pre-line;
 }
+
 </style>
 </head>
 <body>
 <div class="container">
-<header>
 <header style="text-align:center; margin-bottom:24px;">
   <h1 style="font-size:42px; font-weight:600; margin-bottom:8px;">CONCUR</h1>
   <p class="lead" style="margin:0 0 12px; color:#555; font-size:14px;">
@@ -152,119 +136,49 @@ tbody tr:nth-child(even) { background: #f9f9f9; }
   </p>
 
   <div class="button-group" style="display:inline-flex; gap:12px;">
-<!--    <a href="#dataset" style="-->
-<!--        display:flex; align-items:center; gap:6px; padding:8px 14px;-->
-<!--        background: linear-gradient(135deg,#42a5f5,#1976d2);-->
-<!--        color:white; border-radius:8px; text-decoration:none;-->
-<!--        box-shadow: 0 2px 6px rgba(0,0,0,0.15); transition: all 0.2s;">-->
-<!--      <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M2 2v12h12V2H2zm11 11H3V3h10v10z"/></svg>-->
-<!--      Dataset-->
-<!--    </a>-->
     <a href="https://anonymous.4open.science/r/CONCUR-D205/README.md" style="
         display:flex; align-items:center; gap:6px; padding:8px 14px;
         background: linear-gradient(135deg,#66bb6a,#388e3c);
         color:white; border-radius:8px; text-decoration:none;
         box-shadow: 0 2px 6px rgba(0,0,0,0.15); transition: all 0.2s;">
-<!--      <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M5.854 4.146a.5.5 0 0 1 0 .708L3.707 7l2.147 2.146a.5.5 0 0 1-.708.708l-2.5-2.5a.5.5 0 0 1 0-.708l2.5-2.5a.5.5 0 0 1 .708 0zm4.292 0a.5.5 0 0 0 0 .708L12.293 7l-2.147 2.146a.5.5 0 0 0 .708.708l2.5-2.5a.5.5 0 0 0 0-.708l-2.5-2.5a.5.5 0 0 0-.708 0z"/></svg>-->
       Artifact
     </a>
-<!--    <a href="#paper" style="-->
-<!--        display:flex; align-items:center; gap:6px; padding:8px 14px;-->
-<!--        background: linear-gradient(135deg,#ab47bc,#6a1b9a);-->
-<!--        color:white; border-radius:8px; text-decoration:none;-->
-<!--        box-shadow: 0 2px 6px rgba(0,0,0,0.15); transition: all 0.2s;">-->
-<!--      <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M4 0h8a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2zm0 1a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H4zm1 3h6v1H5V4zm0 2h6v1H5V6zm0 2h6v1H5V8z"/></svg>-->
-<!--      Paper-->
-<!--    </a>-->
   </div>
 </header>
-
-<div class="tabs">
-  <div class="tab active" data-target="pass1">Pass@1</div>
-  <div class="tab" data-target="pass3">Pass@3</div>
-<!--  <div class="tab" data-target="comparison">Comparison</div>-->
-</div>
-
-<div class="legend">
-  <div class="legend-item"><div class="legend-color compilation-color"></div>Compilation Errors</div>
-  <div class="legend-item"><div class="legend-color jpf-color"></div>JPF Errors</div>
-  <div class="legend-item"><div class="legend-color passes-color"></div>Passes</div>
-</div>
 
 <div class="card">
   <div class="controls">
     <input id="search" type="search" placeholder="Search model name..." />
   </div>
 
-  <!-- Pass@1 -->
-  <table id="pass1" >
+  <table id="comparison-table">
     <thead>
       <tr>
-        <th data-key="Rank">Rank</th>
-        <th data-key="Model">Model</th>
-        <th data-key="CompilationErrors">Compilation Errors</th>
-        <th data-key="JPFErrors">JPF Errors</th>
-<!--        <th data-key="Passes">Passes</th>-->
-        <th data-key="PassingRate">Passing Rate</th>
-        <th data-key="CodeBLEUAll" data-label="CodeBLEU">CodeBLEU</th>
-<!--        <th data-key="CodeBLEUPass">CodeBLEU (Passes)</th>-->
-        <th>Proportion</th>
+        <th rowspan="2" data-key="Rank">#</th>
+        <th rowspan="2" data-key="Model">Model</th>
+        <th colspan="2" class="header-group">Passing Rate</th>
+        <th colspan="2" class="header-group">CodeBLEU</th>
+      </tr>
+      <tr>
+        <th class="sub-header" data-key="PassingRateK1">k=1</th>
+        <th class="sub-header" data-key="PassingRateK3">k=3</th>
+        <th class="sub-header" data-key="CodeBLEUK1">k=1</th>
+        <th class="sub-header" data-key="CodeBLEUK3">k=3</th>
       </tr>
     </thead>
     <tbody></tbody>
   </table>
+</div>
 
-  <!-- Pass@3 -->
-  <table id="pass3" class="hidden">
-    <thead>
-      <tr>
-        <th data-key="Rank">Rank</th>
-        <th data-key="Model">Model</th>
-        <th data-key="CompilationErrors">Compilation Errors</th>
-        <th data-key="JPFErrors">JPF Errors</th>
-<!--        <th data-key="Passes">Passes</th>-->
-        <th data-key="PassingRate">Passing Rate</th>
-        <th data-key="CodeBLEUAll" data-label="CodeBLEU">CodeBLEU</th>
-<!--        <th data-key="CodeBLEUPass">CodeBLEU (Passes)</th>-->
-        <th>Proportion</th>
-      </tr>
-    </thead>
-    <tbody></tbody>
-  </table>
-
-  <!-- Comparison -->
-<!--  <table id="comparison" class="hidden">-->
-<!--    <thead>-->
-<!--      <tr>-->
-<!--        <th data-key="Model">Model</th>-->
-<!--        <th data-key="CompilationErrors">Compilation Errors <br>k=1/k=3</th>-->
-<!--        <th data-key="JPFErrors">JPF Errors <br>k=1/k=3</th>-->
-<!--&lt;!&ndash;        <th data-key="Passes">Passes k=1/k=3</th>&ndash;&gt;-->
-<!--        <th data-key="PassingRate">Passing Rate <br>k=1/k=3</th>-->
-<!--        <th data-key="CodeBLEUAll" data-label="CodeBLEU">CodeBLEU <br>k=1/k=3</th>-->
-<!--&lt;!&ndash;        <th data-key="CodeBLEUPass">CodeBLEU Passes k=1/k=3</th>&ndash;&gt;-->
-<!--      </tr>-->
-<!--    </thead>-->
-<!--    <tbody></tbody>-->
-<!--  </table>-->
-<!--</div>-->
-
-<div style="width:60%; margin-left: 20%; background:#fff; padding:24px 0;">
+<div style="width:100%; background:#fff; padding:24px 0;">
   <div style="max-width:800px; margin:0 auto; padding:0 16px;">
     <h2 style="text-align:center; margin:0 0 12px 0; font-size:30px; font-weight:600;">What is CONCUR?</h2>
     <p style="margin:0; font-size:14px; line-height:1.6; color:#333;">
       Concur is a designed for benchmarking LLMs for concurrent code generation with compilation and path execution.
     </p>
-<!--    <p style="margin-top:12px; font-size:14px; line-height:1.6; color:#333;">-->
-<!--      <strong>Prompt type:</strong> Concurrent code generation tasks.-->
-<!--    </p>-->
-<!--    <p style="margin-top:12px; font-size:14px; line-height:1.6; color:#333;">-->
-<!--      <strong>Context:</strong> All code generation tasks can be performed exclusively with standard packages, without the need for any third-party packages.-->
-<!--    </p>-->
-
-
   </div>
 </div>
+
 <div style="width: 100%; background: #fff; padding: 24px 0;">
   <div style="max-width: 800px; margin: 0 auto; padding: 0 16px;">
     <h2 style="text-align: center; font-size: 1.5rem; font-weight: 600; margin-bottom: 16px;">
@@ -277,80 +191,86 @@ tbody tr:nth-child(even) { background: #f9f9f9; }
       </colgroup>
       <thead>
         <tr style="background: #f0f0f0;">
-          <th style="padding: 8px; text-align: left; font-weight: 600;">ERROR TYPE</th>
-          <th style="padding: 8px; text-align: left; font-weight: 600;">DESCRIPTION</th>
+          <th style="padding: 8px; font-weight: 600;">ERROR TYPE</th>
+          <th style="padding: 8px; font-weight: 600;">DESCRIPTION</th>
         </tr>
       </thead>
       <tbody>
         <tr style="background: #fff;">
-          <td style="padding: 8px; font-weight: 500; vertical-align: top;">Deadlock</td>
+          <td style="padding: 8px; font-weight: 500; vertical-align: top;">Deadlock
+(DL)</td>
           <td style="padding: 8px; white-space: normal; word-wrap: break-word;">
             A deadlock occurs when multiple threads are running and each thread waits indefinitely for the others to release their locks.
           </td>
         </tr>
         <tr style="background: #f9f9f9;">
-          <td style="padding: 8px; font-weight: 500; vertical-align: top;">Race Condition</td>
+          <td style="padding: 8px; font-weight: 500; vertical-align: top;">Race Condition
+(RC)</td>
           <td style="padding: 8px; white-space: normal; word-wrap: break-word;">
             A race condition occurs when concurrent read and write operations are performed on the same shared variable without proper synchronization.
           </td>
         </tr>
         <tr style="background: #fff;">
-          <td style="padding: 8px; font-weight: 500; vertical-align: top;">Uncaught Exception</td>
+          <td style="padding: 8px; font-weight: 500; vertical-align: top;">Starvation
+(SV)</td>
+          <td style="padding: 8px; white-space: normal; word-wrap: break-word;">
+            Starvation occurs when one or more threads are perpetually denied access to shared resources because higher-priority threads monopolize execution, preventing the lower-priority threads from making progress.
+          </td>
+        </tr>
+        <tr style="background: #f9f9f9;">
+          <td style="padding: 8px; font-weight: 500; vertical-align: top;">Uncaught Exception
+(UE)</td>
           <td style="padding: 8px; white-space: normal; word-wrap: break-word;">
             A range of exceptions, in addition to common concurrency errors such as deadlocks and race conditions, may arise during the execution of concurrent programs, including all exceptions defined in the Java 8 libraries.
           </td>
         </tr>
-        <tr style="background: #f9f9f9;">
-          <td style="padding: 8px; font-weight: 500; vertical-align: top;">No Entry Method</td>
+        <tr style="background: #fff;">
+          <td style="padding: 8px; font-weight: 500; vertical-align: top;">No Entry Method
+(NEM)</td>
           <td style="padding: 8px; white-space: normal; word-wrap: break-word;">
             This error occurs when the generated code lacks a public class with a main method, leaving no appropriate entry point for execution.
           </td>
         </tr>
-        <tr style="background: #fff;">
-          <td style="padding: 8px; font-weight: 500; vertical-align: top;">Single Thread</td>
+        <tr style="background: #f9f9f9;">
+          <td style="padding: 8px; font-weight: 500; vertical-align: top;">Single Thread
+(ST)</td>
           <td style="padding: 8px; white-space: normal; word-wrap: break-word;">
-            This error occurs when the generated code executes with one single thread. This is considered incorrect, as the prompt explicitly requires the generation of multi-threaded concurrent code.
+            This error occurs when the generated code executes with only a single thread. This is considered incorrect, as the prompt explicitly requires the generation of multi-threaded concurrent code.
           </td>
         </tr>
-        <tr style="background: #f9f9f9;">
-          <td style="padding: 8px; font-weight: 500; vertical-align: top;">Termination Error</td>
+        <tr style="background: #fff;">
+          <td style="padding: 8px; font-weight: 500; vertical-align: top;">Termination Error
+(TE)</td>
           <td style="padding: 8px; white-space: normal; word-wrap: break-word;">
-            This error occurs during Java program execution in JPF, which originate not from the program itself but from JPF (e.g., failing to instantiate program variables) or from the runtime environment (e.g., system crashes caused by excessive resource usage from JPF), cause JPF to stop execution.
+            This error occurs during Java program execution in JPF. These originate not from the program itself but from JPF (e.g., failing to instantiate program variables) or from the runtime environment (e.g., system crashes caused by excessive resource usage from JPF), causing JPF to stop execution.
           </td>
         </tr>
       </tbody>
     </table>
-
-<!--    <p style="text-align: center; margin-top: 12px; font-size: 0.95rem;">-->
-<!--      For more details and results in JPF errors, see <a href="./JPFerrorboard.html" style="color: #0073e6; text-decoration: underline;">Report on Pass@1</a>.-->
-<!--    </p>-->
   </div>
 </div>
 
-
-
-  <div style="width:100%; background:#fff; padding:24px 0;">
+<div style="width:100%; background:#fff; padding:24px 0;">
   <div style="max-width:800px; margin:0 auto; padding:0 16px; font-size:14px; line-height:1.6;">
     <h2 style="font-size:30px; font-weight:600; margin-bottom:12px; text-align:center;">Abstract</h2>
     <p>
-      Leveraging Large Language Models(LLMs) for code generation has increasingly
-      emerged as a common practice in the domain of software engineering. Relevant benchmarks have been established to evaluate the code generation capabilities of LLMs. However, existing benchmarks primarily focus on single-threaded
-      code, lack ability to evaluate LLMs generate concurrent code. In real scenarios, using concurrent code is a common scene in software engineering,
-      with some cases even necessitating its use. Compared to single-threaded code,
-      concurrent code exhibits greater complexity and concurrent programs possess unique types of bugs that do not occur in single-threaded code. Therefore,
-      benchmark for evaluating single-threaded code generation cannot perform well
-      in evaluating generating concurrent code. To address this, we designed a
-      benchmark CONCUR specifically aimed at evaluating the capability of generating multi-threaded code. CONCUR conducts a comprehensive analysis of generated multi-threaded code across the entire process from compilation to execution,
-      thereby objectively evaluating the correctness of its multi-threaded properties. We
-      conducted a comprehensive evaluation of a range of LLMs, and the results demonstrate that CONCUR can uncover bugs that only manifest during the execution of
-      multi-threaded code. We constructed a comprehensive evaluation dataset comprising 43 concurrency issues. The dataset includes code generation tasks that address these issues using the default JDK libraries for multi-threaded programming,
-      along with the corresponding ground truth solutions validated through CONCUR.
-      Overall, our work provides a novel direction for evaluating the ability of LLMs to
-      generate multi-threaded code.
+      Leveraging Large Language Models (LLMs) for code generation has increasingly emerged
+as a common practice in the domain of software engineering. Relevant benchmarks have
+been established to evaluate the code generation capabilities of LLMs. However, existing
+benchmarks focus primarily on sequential code, lacking the ability to effectively evaluate
+LLMs on concurrent code generation. Compared to sequential code, concurrent code exhibits
+greater complexity and possesses unique types of bugs, such as deadlocks and race conditions,
+that do not occur in sequential code. Therefore, a benchmark for evaluating sequential code
+generation cannot be useful for evaluating concurrent code generation with LLMs. To address
+this gap, we designed a benchmark CONCUR specifically aimed at evaluating the capability
+of LLMs to generate concurrent code. CONCUR consists of 43 curated concurrency problems
+and leverages formal methods techniques, namely model checking, to assess the correctness
+of the generated code. We conducted an evaluation of a range of LLMs on CONCUR,
+highlighting limitations of current models. Overall, our work provides a novel direction for
+evaluating the capability of LLMs to generate code with focus on concurrency.
     </p>
   </div>
 </div>
-
 
 <div style="width:100%; background:#fff; padding:24px 0;">
   <div style="max-width:800px; margin:0 auto; padding:0 16px; position:relative;">
@@ -362,257 +282,121 @@ tbody tr:nth-child(even) { background: #f9f9f9; }
   </div>
 </div>
 
-
-
-
-<div style="width:100%; background:#fff; padding:24px 0;">
-  <div style="max-width:600px; margin:0 auto; padding:0 16px; position:relative;">
-<!--    <h2 style="text-align:left; margin-top:0; font-size:30px; font-weight:600;">BibTeX</h2>-->
-
-    <button id="copyBib" style="
-        display: none;
-        position:absolute; top:0; right:0;
-        width:28px; height:28px; border:none; border-radius:6px;
-        background:#9e9e9e; color:white; cursor:pointer;  align-items:center; justify-content:center;
-        transition: all 0.2s;
-    " title="Copy BibTeX">
-      <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-        <path d="M10 1H2a1 1 0 0 0-1 1v10h1V2h8V1z"/>
-        <path d="M4 3h10a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1zm0 1v10h10V4H4z"/>
-      </svg>
-    </button>
-
-<!--    <pre id="bibContent" style="margin-top:36px; white-space:pre-wrap; font-family:monospace;">-->
-<!--      @article{llm_evaluation,-->
-<!--        title={Evaluation Results of Large Language Models},-->
-<!--        author={Author Name},-->
-<!--        journal={Journal/Conference Name},-->
-<!--        year={2025},-->
-<!--        url={https://example.com}-->
-<!--      }-->
-<!--    </pre>-->
-  </div>
 </div>
 
-
 <script>
-// result data
-const dataPass1 = [
-  {Model:"claude-opus-4-1", CompilationErrors:0, JPFErrors:16, Passes:27, PassingRate:"27/43 (62.79%)", CodeBLEUAll:0.588989},
-  {Model:"codellama:34b", CompilationErrors:35, JPFErrors:8, Passes:0, PassingRate:"0/43 (0.00%)", CodeBLEUAll:0.445282},
-  {Model:"codeqwen:7b", CompilationErrors:26, JPFErrors:11, Passes:6, PassingRate:"6/43 (13.95%)", CodeBLEUAll:0.466210},
-  {Model:"codestral:22b", CompilationErrors:16, JPFErrors:11, Passes:16, PassingRate:"16/43 (37.21%)", CodeBLEUAll:0.487755},
-  {Model:"deepseek-r1:32b", CompilationErrors:18, JPFErrors:13, Passes:12, PassingRate:"12/43 (27.91%)", CodeBLEUAll:0.548819},
-  {Model:"dolphin3:8b", CompilationErrors:25, JPFErrors:8, Passes:10, PassingRate:"10/43 (23.26%)", CodeBLEUAll:0.511915},
-  {Model:"gemma2:27b", CompilationErrors:22, JPFErrors:9, Passes:12, PassingRate:"12/43 (27.91%)", CodeBLEUAll:0.486252},
-  {Model:"gpt-4o", CompilationErrors:6, JPFErrors:14, Passes:23, PassingRate:"23/43 (53.49%)", CodeBLEUAll:0.563879},
-  {Model:"gpt-5", CompilationErrors:4, JPFErrors:8, Passes:31, PassingRate:"31/43 (72.09%)", CodeBLEUAll:0.585806},
-  {Model:"llama3.3:70b", CompilationErrors:15, JPFErrors:8, Passes:20, PassingRate:"20/43 (46.51%)", CodeBLEUAll:0.515749},
-  {Model:"llava:34b", CompilationErrors:37, JPFErrors:2, Passes:4, PassingRate:"4/43 (9.30%)", CodeBLEUAll:0.483585},
-  {Model:"magicoder:7b", CompilationErrors:28, JPFErrors:8, Passes:7, PassingRate:"7/43 (16.28%)", CodeBLEUAll:0.445733},
-  {Model:"mistral:7b", CompilationErrors:34, JPFErrors:7, Passes:2, PassingRate:"2/43 (4.65%)", CodeBLEUAll:0.514027},
-  {Model:"mixtral:8x7b", CompilationErrors:18, JPFErrors:12, Passes:13, PassingRate:"13/43 (30.23%)", CodeBLEUAll:0.515187},
-  {Model:"opencoder:8b", CompilationErrors:18, JPFErrors:10, Passes:15, PassingRate:"15/43 (34.88%)", CodeBLEUAll:0.492801},
-  {Model:"phi4:14b", CompilationErrors:17, JPFErrors:7, Passes:19, PassingRate:"19/43 (44.19%)", CodeBLEUAll:0.554407},
-  {Model:"phind-codellama:34b", CompilationErrors:19, JPFErrors:13, Passes:11, PassingRate:"11/43 (25.58%)", CodeBLEUAll:0.461113},
-  {Model:"qwen3:32b", CompilationErrors:10, JPFErrors:15, Passes:18, PassingRate:"18/43 (41.86%)", CodeBLEUAll:0.534481},
-  {Model:"starcoder2:15b", CompilationErrors:28, JPFErrors:12, Passes:3, PassingRate:"3/43 (6.98%)", CodeBLEUAll:0.346492},
-  {Model:"vicuna:33b", CompilationErrors:35, JPFErrors:3, Passes:5, PassingRate:"5/43 (11.63%)", CodeBLEUAll:0.446508},
-  {Model:"wizardcoder:33b", CompilationErrors:13, JPFErrors:15, Passes:15, PassingRate:"15/43 (34.88%)", CodeBLEUAll:0.481291},
-  {Model:"zephyr:7b", CompilationErrors:40, JPFErrors:1, Passes:2, PassingRate:"2/43 (4.65%)", CodeBLEUAll:0.525565}
+// Combined data with both k=1 and k=3 results
+const data = [
+  {Model:"gpt-5", PassingRateK1:"31/43 (72.09%)", PassingRateK3:"32/43 (74.42%)", CodeBLEUK1:0.585806, CodeBLEUK3:0.584363},
+  {Model:"claude-opus-4-1", PassingRateK1:"27/43 (62.79%)", PassingRateK3:"37/43 (86.05%)", CodeBLEUK1:0.588989, CodeBLEUK3:0.585045},
+  {Model:"gpt-4o", PassingRateK1:"23/43 (53.49%)", PassingRateK3:"34/43 (79.07%)", CodeBLEUK1:0.563879, CodeBLEUK3:0.554107},
+  {Model:"llama3.3:70b", PassingRateK1:"20/43 (46.51%)", PassingRateK3:"25/43 (58.14%)", CodeBLEUK1:0.515749, CodeBLEUK3:0.513332},
+  {Model:"phi4:14b", PassingRateK1:"19/43 (44.19%)", PassingRateK3:"33/43 (76.74%)", CodeBLEUK1:0.554407, CodeBLEUK3:0.542918},
+  {Model:"qwen3:32b", PassingRateK1:"18/43 (41.86%)", PassingRateK3:"34/43 (79.07%)", CodeBLEUK1:0.534481, CodeBLEUK3:0.552070},
+  {Model:"codestral:22b", PassingRateK1:"16/43 (37.21%)", PassingRateK3:"29/43 (67.44%)", CodeBLEUK1:0.487755, CodeBLEUK3:0.479179},
+  {Model:"wizardcoder:33b", PassingRateK1:"15/43 (34.88%)", PassingRateK3:"29/43 (67.44%)", CodeBLEUK1:0.481291, CodeBLEUK3:0.476069},
+  {Model:"opencoder:8b", PassingRateK1:"15/43 (34.88%)", PassingRateK3:"26/43 (60.47%)", CodeBLEUK1:0.492801, CodeBLEUK3:0.494951},
+  {Model:"mixtral:8x7b", PassingRateK1:"13/43 (30.23%)", PassingRateK3:"15/43 (34.88%)", CodeBLEUK1:0.515187, CodeBLEUK3:0.500698},
+  {Model:"deepseek-r1:32b", PassingRateK1:"12/43 (27.91%)", PassingRateK3:"30/43 (69.77%)", CodeBLEUK1:0.548819, CodeBLEUK3:0.548317},
+  {Model:"gemma2:27b", PassingRateK1:"12/43 (27.91%)", PassingRateK3:"14/43 (32.56%)", CodeBLEUK1:0.486252, CodeBLEUK3:0.491610},
+  {Model:"phind-codellama:34b", PassingRateK1:"11/43 (25.58%)", PassingRateK3:"23/43 (53.49%)", CodeBLEUK1:0.461113, CodeBLEUK3:0.466543},
+  {Model:"dolphin3:8b", PassingRateK1:"10/43 (23.26%)", PassingRateK3:"18/43 (41.86%)", CodeBLEUK1:0.511915, CodeBLEUK3:0.501805},
+  {Model:"magicoder:7b", PassingRateK1:"7/43 (16.28%)", PassingRateK3:"12/43 (27.91%)", CodeBLEUK1:0.445733, CodeBLEUK3:0.441982},
+  {Model:"codeqwen:7b", PassingRateK1:"6/43 (13.95%)", PassingRateK3:"18/43 (41.86%)", CodeBLEUK1:0.466210, CodeBLEUK3:0.472215},
+  {Model:"vicuna:33b", PassingRateK1:"5/43 (11.63%)", PassingRateK3:"8/43 (18.60%)", CodeBLEUK1:0.446508, CodeBLEUK3:0.461179},
+  {Model:"llava:34b", PassingRateK1:"4/43 (9.30%)", PassingRateK3:"8/43 (18.60%)", CodeBLEUK1:0.483585, CodeBLEUK3:0.462731},
+  {Model:"starcoder2:15b", PassingRateK1:"3/43 (6.98%)", PassingRateK3:"8/43 (18.60%)", CodeBLEUK1:0.346492, CodeBLEUK3:0.382848},
+  {Model:"mistral:7b", PassingRateK1:"2/43 (4.65%)", PassingRateK3:"6/43 (13.95%)", CodeBLEUK1:0.514027, CodeBLEUK3:0.511658},
+  {Model:"zephyr:7b", PassingRateK1:"2/43 (4.65%)", PassingRateK3:"4/43 (9.30%)", CodeBLEUK1:0.525565, CodeBLEUK3:0.546725},
+  {Model:"codellama:34b", PassingRateK1:"0/43 (0.00%)", PassingRateK3:"11/43 (25.58%)", CodeBLEUK1:0.445282, CodeBLEUK3:0.432682}
 ];
-const dataPass3 = [
-  {Model:"claude-opus-4-1", CompilationErrors:0, JPFErrors:6, Passes:37, PassingRate:"37/43 (86.05%)", CodeBLEUAll:0.593595},
-  {Model:"codellama:34b", CompilationErrors:19, JPFErrors:13, Passes:11, PassingRate:"11/43 (25.58%)", CodeBLEUAll:0.463660},
-  {Model:"codeqwen:7b", CompilationErrors:16, JPFErrors:9, Passes:18, PassingRate:"18/43 (41.86%)", CodeBLEUAll:0.497107},
-  {Model:"codestral:22b", CompilationErrors:6, JPFErrors:8, Passes:29, PassingRate:"29/43 (67.44%)", CodeBLEUAll:0.668762},
-  {Model:"deepseek-r1:32b", CompilationErrors:7, JPFErrors:6, Passes:30, PassingRate:"30/43 (69.77%)", CodeBLEUAll:0.549887},
-  {Model:"dolphin3:8b", CompilationErrors:18, JPFErrors:7, Passes:18, PassingRate:"18/43 (41.86%)", CodeBLEUAll:0.597928},
-  {Model:"gemma2:27b", CompilationErrors:19, JPFErrors:10, Passes:14, PassingRate:"14/43 (32.56%)", CodeBLEUAll:0.498632},
-  {Model:"gpt-4o", CompilationErrors:2, JPFErrors:7, Passes:34, PassingRate:"34/43 (79.07%)", CodeBLEUAll:0.724407},
-  {Model:"gpt-5", CompilationErrors:0, JPFErrors:11, Passes:32, PassingRate:"32/43 (74.42%)", CodeBLEUAll:0.638047},
-  {Model:"llama3.3:70b", CompilationErrors:12, JPFErrors:6, Passes:25, PassingRate:"25/43 (58.14%)", CodeBLEUAll:0.567018},
-  {Model:"llava:34b", CompilationErrors:31, JPFErrors:4, Passes:8, PassingRate:"8/43 (18.60%)", CodeBLEUAll:0.466870},
-  {Model:"magicoder:7b", CompilationErrors:19, JPFErrors:12, Passes:12, PassingRate:"12/43 (27.91%)", CodeBLEUAll:0.457410},
-  {Model:"mistral:7b", CompilationErrors:30, JPFErrors:7, Passes:6, PassingRate:"6/43 (13.95%)", CodeBLEUAll:0.543555},
-  {Model:"mixtral:8x7b", CompilationErrors:10, JPFErrors:18, Passes:15, PassingRate:"15/43 (34.88%)", CodeBLEUAll:0.559218},
-  {Model:"opencoder:8b", CompilationErrors:9, JPFErrors:8, Passes:26, PassingRate:"26/43 (60.47%)", CodeBLEUAll:0.537506},
-  {Model:"phi4:14b", CompilationErrors:3, JPFErrors:7, Passes:33, PassingRate:"33/43 (76.74%)", CodeBLEUAll:0.578995},
-  {Model:"phind-codellama:34b", CompilationErrors:9, JPFErrors:11, Passes:23, PassingRate:"23/43 (53.49%)", CodeBLEUAll:0.538943},
-  {Model:"qwen3:32b", CompilationErrors:0, JPFErrors:9, Passes:34, PassingRate:"34/43 (79.07%)", CodeBLEUAll:0.597609},
-  {Model:"starcoder2:15b", CompilationErrors:10, JPFErrors:25, Passes:8, PassingRate:"8/43 (18.60%)", CodeBLEUAll:0.438898},
-  {Model:"vicuna:33b", CompilationErrors:28, JPFErrors:7, Passes:8, PassingRate:"8/43 (18.60%)", CodeBLEUAll:0.465669},
-  {Model:"wizardcoder:33b", CompilationErrors:4, JPFErrors:10, Passes:29, PassingRate:"29/43 (67.44%)", CodeBLEUAll:0.686790},
-  {Model:"zephyr:7b", CompilationErrors:32, JPFErrors:7, Passes:4, PassingRate:"4/43 (9.30%)", CodeBLEUAll:0.499297}
-];
-const dataComparison = dataPass1.map(p1 => {
-  const p3 = dataPass3.find(d => d.Model === p1.Model);
-  return {
-    Model: p1.Model,
-    CompilationErrors: `${p1.CompilationErrors ?? 0} / ${p3?.CompilationErrors ?? 0}`,
-    JPFErrors: `${p1.JPFErrors ?? 0} / ${p3?.JPFErrors ?? 0}`,
-    Passes: `${p1.Passes ?? 0} / ${p3?.Passes ?? 0}`,
-    PassingRate: `${p1.PassingRate ?? '0/0 (0.00%)'} / ${p3?.PassingRate ?? '0/0 (0.00%)'}`,
-    CodeBLEUAll: `${(p1.CodeBLEUAll ?? 0).toFixed(6)} / ${(p3?.CodeBLEUAll ?? 0).toFixed(6)}`,
-    CodeBLEUPass: `${(p1.CodeBLEUPass ?? 0).toFixed(6)} / ${(p3?.CodeBLEUPass ?? 0).toFixed(6)}`
-  };
-});
 
-
-let currentData = dataPass1;
-let currentTableId = 'pass1';
-let sortKey = 'Passes';
+let sortKey = 'PassingRateK1';
 let ascending = false;
 
-function renderTable() {
-  const tbody = document.getElementById(currentTableId).querySelector('tbody');
-  const thead = document.getElementById(currentTableId).querySelector('thead');
-  const filter = document.getElementById('search').value.toLowerCase();
-  const filteredData = currentData.filter(r => r.Model.toLowerCase().includes(filter));
+function extractPercentage(rate) {
+  const match = rate.match(/\(([\d.]+)%\)/);
+  return match ? parseFloat(match[1]) : 0;
+}
 
-  filteredData.sort((a,b)=>{
-    let valA = a[sortKey], valB = b[sortKey];
-    if(sortKey==='PassingRate'){
-      valA = parseFloat(valA.match(/\(([\d.]+)%\)/)[1]);
-      valB = parseFloat(valB.match(/\(([\d.]+)%\)/)[1]);
+function renderTable() {
+  const tbody = document.getElementById('comparison-table').querySelector('tbody');
+  const filter = document.getElementById('search').value.toLowerCase();
+  const filteredData = data.filter(r => r.Model.toLowerCase().includes(filter));
+
+  // Sort data
+  filteredData.sort((a, b) => {
+    let valA = a[sortKey];
+    let valB = b[sortKey];
+
+    if (sortKey === 'PassingRateK1' || sortKey === 'PassingRateK3') {
+      valA = extractPercentage(valA);
+      valB = extractPercentage(valB);
     }
-    if(typeof valA==='string') valA = valA.toLowerCase();
-    if(typeof valB==='string') valB = valB.toLowerCase();
-    if(valA < valB) return ascending ? -1 : 1;
-    if(valA > valB) return ascending ? 1 : -1;
+
+    if (typeof valA === 'string') {
+      valA = valA.toLowerCase();
+      valB = valB.toLowerCase();
+    }
+
+    if (valA < valB) return ascending ? -1 : 1;
+    if (valA > valB) return ascending ? 1 : -1;
     return 0;
   });
 
   tbody.innerHTML = '';
 
-  thead.querySelectorAll('th').forEach(th => {
-    if (currentTableId === 'pass3' && (th.dataset.key === 'CompilationErrors' || th.dataset.key === 'JPFErrors')) {
-      th.classList.add('hidden-column');
-    } else {
-      th.classList.remove('hidden-column');
-    }
-  });
-
-  filteredData.forEach((r,i)=>{
+  filteredData.forEach((r, i) => {
     const tr = document.createElement('tr');
-
-    if(currentTableId==='comparison'){
-      tr.innerHTML = `<td>${r.Model}</td><td>${r.CompilationErrors}</td><td>${r.JPFErrors}</td>
-<td>${r.PassingRate}</td><td>${r.CodeBLEUAll}</td>`;
-    } else {
-      const total = r.CompilationErrors + r.JPFErrors + r.Passes;
-      const compPercent = total ? ((r.CompilationErrors/total)*100).toFixed(1) : 0;
-      const jpfPercent = total ? ((r.JPFErrors/total)*100).toFixed(1) : 0;
-      const passPercent = total ? ((r.Passes/total)*100).toFixed(1) : 0;
-
-      tr.innerHTML = `
-        <td>${i+1}</td>
-        <td>${r.Model}</td>
-        <td class="${currentTableId==='pass3' ? 'hidden-column' : ''}">${r.CompilationErrors}</td>
-        <td class="${currentTableId==='pass3' ? 'hidden-column' : ''}">${r.JPFErrors}</td>
-        <td>${r.PassingRate}</td>
-        <td>${r.CodeBLEUAll.toFixed(6)}</td>
-        <td>
-          <div class="bar-container">
-            <div class="bar compilation-errors" style="width:${compPercent}%">${compPercent}%</div>
-            <div class="bar jpf-errors" style="width:${jpfPercent}%">${jpfPercent}%</div>
-            <div class="bar passes" style="width:${passPercent}%">${passPercent}%</div>
-            <div class="tooltip">C:${r.CompilationErrors}, J:${r.JPFErrors}, P:${r.Passes}</div>
-          </div>
-        </td>`;
-    }
-
+    tr.innerHTML = `
+      <td>${i + 1}</td>
+      <td class="model-name">${r.Model}</td>
+      <td class="numeric">${r.PassingRateK1}</td>
+      <td class="numeric">${r.PassingRateK3}</td>
+      <td class="numeric">${r.CodeBLEUK1.toFixed(6)}</td>
+      <td class="numeric">${r.CodeBLEUK3.toFixed(6)}</td>
+    `;
     tbody.appendChild(tr);
   });
 }
 
-
-// Tabs switch
-document.querySelectorAll('.tab').forEach(tab=>{
-  tab.addEventListener('click', ()=>{
-    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-    tab.classList.add('active');
-
-    const target = tab.dataset.target;
-    currentTableId = target;
-    currentData = target==='pass1' ? dataPass1 : target==='pass3' ? dataPass3 : dataComparison;
-
-    document.querySelectorAll('table').forEach(t => {
-      if (!t.classList.contains('static-table')) {
-        t.classList.add('hidden');
-      }
-    });
-    document.getElementById(target).classList.remove('hidden');
-
-    renderTable();
-  });
-});
-
-document.getElementById('copyBib').addEventListener('click', () => {
-  const text = document.getElementById('bibContent').innerText;
-  navigator.clipboard.writeText(text).then(() => {
-    const btn = document.getElementById('copyBib');
-    btn.innerHTML = `
-      <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-        <path d="M13.485 1.929a.75.75 0 0 1 0 1.06L6.75 9.724l-3.485-3.485a.75.75 0 0 1 1.06-1.06l2.425 2.425 6.24-6.24a.75.75 0 0 1 1.06 0z"/>
-      </svg>
-    `;
-    setTimeout(() => {
-      btn.innerHTML = `
-      <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-        <path d="M10 1H2a1 1 0 0 0-1 1v10h1V2h8V1z"/>
-        <path d="M4 3h10a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1zm0 1v10h10V4H4z"/>
-      </svg>
-      `;
-    }, 1500);
-  });
-});
-
-document.getElementById('search').addEventListener('input', renderTable);
-
-// sort function
+// Sort functionality
 document.querySelectorAll('thead th').forEach(th => {
   const key = th.dataset.key;
-  if (!key) return;
+  if (!key || key === 'Rank') return;
 
   th.addEventListener('click', () => {
-    if (sortKey === key) ascending = !ascending;
-    else { sortKey = key; ascending = false; }
-
-    th.parentElement.querySelectorAll('th').forEach(t => {
-      if (!t.dataset.key) return;
-
-      if (t.dataset.key === 'CodeBLEUAll' || t.dataset.key === 'CodeBLEUPass') {
-        t.textContent = t.dataset.label;
-      } else {
-        t.textContent = t.dataset.key;
-      }
-    });
-
-    if (th.dataset.key === 'CodeBLEUAll' || th.dataset.key === 'CodeBLEUPass') {
-      th.textContent = th.dataset.label + (ascending ? ' ▲' : ' ▼');
+    if (sortKey === key) {
+      ascending = !ascending;
     } else {
-      th.textContent = th.dataset.key + (ascending ? ' ▲' : ' ▼');
+      sortKey = key;
+      ascending = false;
     }
+
+    // Update header indicators
+    document.querySelectorAll('thead th').forEach(t => {
+      const headerKey = t.dataset.key;
+      if (!headerKey || headerKey === 'Rank') return;
+
+      // Remove existing arrows
+      let text = t.textContent.replace(' ▲', '').replace(' ▼', '');
+
+      if (headerKey === sortKey) {
+        text += ascending ? ' ▲' : ' ▼';
+      }
+
+      t.textContent = text;
+    });
 
     renderTable();
   });
 });
 
+// Search functionality
+document.getElementById('search').addEventListener('input', renderTable);
 
+// Initial render
 renderTable();
-
- const toggleBtn = document.getElementById('togglePrompt');
-  const contentDiv = document.getElementById('promptContent');
-  toggleBtn.addEventListener('click', () => {
-    if(contentDiv.style.display === 'none'){
-      contentDiv.style.display = 'block';
-      toggleBtn.textContent = 'Prompt Example ▼';
-    } else {
-      contentDiv.style.display = 'none';
-      toggleBtn.textContent = 'Prompt Example ▲';
-    }
-  });
 </script>
 </body>
 </html>
