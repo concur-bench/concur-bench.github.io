@@ -6,9 +6,9 @@
   <title>Concurrency Issues Summary</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
   <style>
-    #downloadCsv { display: inline-block; }
+
     body{font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; background:#ffffff; color:#222; padding:28px;}
-    .container{max-width:1100px;margin:0 auto}
+    .container{max-width:1200px;margin:0 auto}
     header{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
     h1{font-size:20px;margin:0}
     p.lead{margin:6px 0 0;color:#555;font-size:13px}
@@ -33,7 +33,7 @@
     <header>
       <div>
         <h1>CONCUR — JPF Report in Pass@1</h1>
-        <p class="lead">This table shows concurrency-related issues across LLMs.</p>
+        <p class="lead">Summary of Errors in Generated Code (Pass@1) - Compilation Errors and JPF Errors</p>
       </div>
       <a href="./leaderboard.html" class="muted">CONCUR</a>
     </header>
@@ -41,7 +41,7 @@
     <section class="card">
       <div class="controls">
         <input id="search" type="search" placeholder="Search model name (e.g. gpt-5)" />
-<!--        <button id="downloadCsv">Download CSV</button>-->
+
         <button id="toggleChart">Toggle Chart / Table</button>
       </div>
 
@@ -50,13 +50,14 @@
           <thead>
             <tr>
               <th class="sortable" data-key="Model">Model</th>
-              <th class="sortable" data-key="Deadlock">Deadlock</th>
-              <th class="sortable" data-key="RaceCondition">Race Condition</th>
-              <th class="sortable" data-key="SingleThread">Single Thread</th>
-              <th class="sortable" data-key="RuntimeException">Uncaught Exception</th>
-              <th class="sortable" data-key="NoEntryMethod">No Entry Method</th>
-              <th class="sortable" data-key="TerminationError">Termination Error</th>
-              <th class="sortable" data-key="Starvation">Starvation</th>
+              <th class="sortable" data-key="CompilationErrors">Compilation Errors</th>
+              <th class="sortable" data-key="Deadlock">DL (Deadlock)</th>
+              <th class="sortable" data-key="RaceCondition">RC (Race Condition)</th>
+              <th class="sortable" data-key="Starvation">SV (Starvation)</th>
+              <th class="sortable" data-key="RuntimeException">UE (Uncaught Exception)</th>
+              <th class="sortable" data-key="NoEntryMethod">NEM (No Entry Method)</th>
+              <th class="sortable" data-key="SingleThread">ST (Single Thread)</th>
+              <th class="sortable" data-key="TerminationError">TE (Termination Error)</th>
             </tr>
           </thead>
           <tbody id="tbody"></tbody>
@@ -77,31 +78,31 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
   <script>
     const rows = [
-      {Model:'claude-opus-4-1', Deadlock:1, RaceCondition:1, SingleThread:1, RuntimeException:14, NoEntryMethod:0, TerminationError:0, Starvation:0},
-      {Model:'codellama:34b', Deadlock:1, RaceCondition:0, SingleThread:1, RuntimeException:1, NoEntryMethod:6, TerminationError:0, Starvation:0},
-      {Model:'codeqwen:7b', Deadlock:2, RaceCondition:2, SingleThread:1, RuntimeException:3, NoEntryMethod:4, TerminationError:0, Starvation:0},
-      {Model:'codestral:22b', Deadlock:1, RaceCondition:3, SingleThread:1, RuntimeException:2, NoEntryMethod:2, TerminationError:3, Starvation:0},
-      {Model:'deepseek-r1:32b', Deadlock:0, RaceCondition:4, SingleThread:1, RuntimeException:3, NoEntryMethod:0, TerminationError:6, Starvation:0},
-      {Model:'dolphin3:8b', Deadlock:3, RaceCondition:3, SingleThread:1, RuntimeException:1, NoEntryMethod:0, TerminationError:1, Starvation:0},
-      {Model:'gemma2:27b', Deadlock:1, RaceCondition:2, SingleThread:2, RuntimeException:5, NoEntryMethod:0, TerminationError:1, Starvation:0},
-      {Model:'gpt-4o', Deadlock:1, RaceCondition:4, SingleThread:1, RuntimeException:9, NoEntryMethod:0, TerminationError:0, Starvation:0},
-      {Model:'gpt-5', Deadlock:1, RaceCondition:2, SingleThread:1, RuntimeException:4, NoEntryMethod:0, TerminationError:1, Starvation:0},
-      {Model:'llama3.3:70b', Deadlock:1, RaceCondition:2, SingleThread:1, RuntimeException:2, NoEntryMethod:1, TerminationError:2, Starvation:0},
-      {Model:'llava:34b', Deadlock:0, RaceCondition:1, SingleThread:0, RuntimeException:0, NoEntryMethod:0, TerminationError:1, Starvation:0},
-      {Model:'magicoder:7b', Deadlock:2, RaceCondition:0, SingleThread:2, RuntimeException:0, NoEntryMethod:2, TerminationError:2, Starvation:0},
-      {Model:'mistral:7b', Deadlock:0, RaceCondition:1, SingleThread:1, RuntimeException:3, NoEntryMethod:1, TerminationError:2, Starvation:0},
-      {Model:'mixtral:8x7b', Deadlock:0, RaceCondition:0, SingleThread:3, RuntimeException:4, NoEntryMethod:0, TerminationError:8, Starvation:0},
-      {Model:'opencoder:8b', Deadlock:2, RaceCondition:2, SingleThread:0, RuntimeException:1, NoEntryMethod:1, TerminationError:4, Starvation:0},
-      {Model:'phi4:14b', Deadlock:2, RaceCondition:4, SingleThread:1, RuntimeException:1, NoEntryMethod:0, TerminationError:0, Starvation:0},
-      {Model:'phind-codellama:34b', Deadlock:0, RaceCondition:1, SingleThread:3, RuntimeException:5, NoEntryMethod:2, TerminationError:3, Starvation:0},
-      {Model:'qwen3:32b', Deadlock:0, RaceCondition:3, SingleThread:1, RuntimeException:1, NoEntryMethod:0, TerminationError:11, Starvation:0},
-      {Model:'starcoder2:15b', Deadlock:0, RaceCondition:0, SingleThread:7, RuntimeException:0, NoEntryMethod:2, TerminationError:0, Starvation:0},
-      {Model:'vicuna:33b', Deadlock:0, RaceCondition:0, SingleThread:1, RuntimeException:1, NoEntryMethod:1, TerminationError:1, Starvation:0},
-      {Model:'wizardcoder:33b', Deadlock:2, RaceCondition:1, SingleThread:2, RuntimeException:6, NoEntryMethod:0, TerminationError:5, Starvation:0},
-      {Model:'zephyr:7b', Deadlock:0, RaceCondition:0, SingleThread:0, RuntimeException:1, NoEntryMethod:0, TerminationError:0, Starvation:0},
+      {Model:'claude-opus-4-1', CompilationErrors:0, Deadlock:1, RaceCondition:1, Starvation:0, RuntimeException:14, NoEntryMethod:0, SingleThread:1, TerminationError:0},
+      {Model:'codellama:34b', CompilationErrors:35, Deadlock:1, RaceCondition:0, Starvation:0, RuntimeException:1, NoEntryMethod:6, SingleThread:1, TerminationError:0},
+      {Model:'codeqwen:7b', CompilationErrors:26, Deadlock:2, RaceCondition:2, Starvation:0, RuntimeException:3, NoEntryMethod:4, SingleThread:1, TerminationError:0},
+      {Model:'codestral:22b', CompilationErrors:16, Deadlock:1, RaceCondition:3, Starvation:0, RuntimeException:2, NoEntryMethod:2, SingleThread:1, TerminationError:3},
+      {Model:'deepseek-r1:32b', CompilationErrors:18, Deadlock:0, RaceCondition:4, Starvation:0, RuntimeException:3, NoEntryMethod:0, SingleThread:1, TerminationError:6},
+      {Model:'dolphin3:8b', CompilationErrors:25, Deadlock:3, RaceCondition:3, Starvation:0, RuntimeException:1, NoEntryMethod:0, SingleThread:1, TerminationError:1},
+      {Model:'gemma2:27b', CompilationErrors:22, Deadlock:1, RaceCondition:2, Starvation:0, RuntimeException:5, NoEntryMethod:0, SingleThread:2, TerminationError:1},
+      {Model:'gpt-4o', CompilationErrors:6, Deadlock:1, RaceCondition:4, Starvation:0, RuntimeException:9, NoEntryMethod:0, SingleThread:1, TerminationError:0},
+      {Model:'gpt-5', CompilationErrors:4, Deadlock:1, RaceCondition:2, Starvation:0, RuntimeException:4, NoEntryMethod:0, SingleThread:1, TerminationError:1},
+      {Model:'llama3.3:70b', CompilationErrors:15, Deadlock:1, RaceCondition:2, Starvation:0, RuntimeException:2, NoEntryMethod:1, SingleThread:1, TerminationError:2},
+      {Model:'llava:34b', CompilationErrors:37, Deadlock:0, RaceCondition:1, Starvation:0, RuntimeException:0, NoEntryMethod:0, SingleThread:0, TerminationError:1},
+      {Model:'magicoder:7b', CompilationErrors:28, Deadlock:2, RaceCondition:0, Starvation:0, RuntimeException:0, NoEntryMethod:2, SingleThread:2, TerminationError:2},
+      {Model:'mistral:7b', CompilationErrors:34, Deadlock:0, RaceCondition:1, Starvation:0, RuntimeException:3, NoEntryMethod:1, SingleThread:1, TerminationError:2},
+      {Model:'mixtral:8x7b', CompilationErrors:18, Deadlock:0, RaceCondition:0, Starvation:0, RuntimeException:4, NoEntryMethod:0, SingleThread:3, TerminationError:8},
+      {Model:'opencoder:8b', CompilationErrors:18, Deadlock:2, RaceCondition:2, Starvation:0, RuntimeException:1, NoEntryMethod:1, SingleThread:0, TerminationError:4},
+      {Model:'phi4:14b', CompilationErrors:17, Deadlock:2, RaceCondition:4, Starvation:0, RuntimeException:1, NoEntryMethod:0, SingleThread:1, TerminationError:0},
+      {Model:'phind-codellama:34b', CompilationErrors:19, Deadlock:0, RaceCondition:1, Starvation:0, RuntimeException:5, NoEntryMethod:2, SingleThread:3, TerminationError:3},
+      {Model:'qwen3:32b', CompilationErrors:10, Deadlock:0, RaceCondition:3, Starvation:0, RuntimeException:1, NoEntryMethod:0, SingleThread:1, TerminationError:11},
+      {Model:'starcoder2:15b', CompilationErrors:28, Deadlock:0, RaceCondition:0, Starvation:0, RuntimeException:0, NoEntryMethod:2, SingleThread:7, TerminationError:0},
+      {Model:'vicuna:33b', CompilationErrors:35, Deadlock:0, RaceCondition:0, Starvation:0, RuntimeException:1, NoEntryMethod:1, SingleThread:1, TerminationError:1},
+      {Model:'wizardcoder:33b', CompilationErrors:13, Deadlock:2, RaceCondition:1, Starvation:0, RuntimeException:6, NoEntryMethod:0, SingleThread:2, TerminationError:5},
+      {Model:'zephyr:7b', CompilationErrors:40, Deadlock:0, RaceCondition:0, Starvation:0, RuntimeException:1, NoEntryMethod:0, SingleThread:0, TerminationError:0},
     ];
 
-    const totals = {Deadlock:20, RaceCondition:36, SingleThread:32, RuntimeException:67, NoEntryMethod:22, TerminationError:51};
+    const totals = {CompilationErrors:464, Deadlock:20, RaceCondition:36, Starvation:0, RuntimeException:67, NoEntryMethod:22, SingleThread:32, TerminationError:51};
 
     const tbody = document.getElementById('tbody');
 
@@ -123,34 +124,38 @@
         const tr = document.createElement('tr');
         tr.innerHTML = `
           <td data-label="Model">${escapeHtml(r.Model)}</td>
-          <td data-label="Deadlock">${r.Deadlock}</td>
-          <td data-label="Race Condition">${r.RaceCondition}</td>
-          <td data-label="Single Thread">${r.SingleThread}</td>
-          <td data-label="Uncaught Exception">${r.RuntimeException}</td>
-          <td data-label="No Entry Method">${r.NoEntryMethod}</td>
-          <td data-label="Termination Error">${r.TerminationError}</td>
-           <td data-label="Starvation">${r.Starvation}</td>
+          <td data-label="Compilation Errors">${r.CompilationErrors}</td>
+          <td data-label="DL (Deadlock)">${r.Deadlock}</td>
+          <td data-label="RC (Race Condition)">${r.RaceCondition}</td>
+          <td data-label="SV (Starvation)">${r.Starvation}</td>
+          <td data-label="UE (Uncaught Exception)">${r.RuntimeException}</td>
+          <td data-label="NEM (No Entry Method)">${r.NoEntryMethod}</td>
+          <td data-label="ST (Single Thread)">${r.SingleThread}</td>
+          <td data-label="TE (Termination Error)">${r.TerminationError}</td>
         `;
         tbody.appendChild(tr);
       });
 
+      const totalCompilationErrors = data.reduce((sum, r) => sum + r.CompilationErrors, 0);
       const totalDeadlock = data.reduce((sum, r) => sum + r.Deadlock, 0);
       const totalRC = data.reduce((sum, r) => sum + r.RaceCondition, 0);
-      const totalST = data.reduce((sum, r) => sum + r.SingleThread, 0);
+      const totalStarvation = data.reduce((sum, r) => sum + r.Starvation, 0);
       const totalUE = data.reduce((sum, r) => sum + r.RuntimeException, 0);
       const totalNEM = data.reduce((sum, r) => sum + r.NoEntryMethod, 0);
+      const totalST = data.reduce((sum, r) => sum + r.SingleThread, 0);
       const totalTE = data.reduce((sum, r) => sum + r.TerminationError, 0);
 
       const trTot = document.getElementById('totalsRow');
       trTot.innerHTML = `
         <td>Total</td>
+        <td>${totalCompilationErrors}</td>
         <td>${totalDeadlock}</td>
         <td>${totalRC}</td>
-        <td>${totalST}</td>
+        <td>${totalStarvation}</td>
         <td>${totalUE}</td>
         <td>${totalNEM}</td>
+        <td>${totalST}</td>
         <td>${totalTE}</td>
-        <td>${totalStarvation}</td>
       `;
     }
 
@@ -171,25 +176,19 @@
       });
     });
 
-    document.getElementById('downloadCsv').addEventListener('click', ()=>{
-      const header = ['Model','Deadlock','Race Condition','Single Thread','Uncaught Exception','No Entry Method','Termination Error'];
-      const lines = [header.join(',')];
-      rows.forEach(r=> lines.push([r.Model,r.Deadlock,r.RaceCondition,r.SingleThread,r.RuntimeException,r.NoEntryMethod,r.TerminationError].join(',')));
-      lines.push(['Total',totals.Deadlock,totals.RaceCondition,totals.SingleThread,totals.RuntimeException,totals.NoEntryMethod,totals.TerminationError].join(','));
-      const blob = new Blob([lines.join('\n')], {type:'text/csv;charset=utf-8;'});
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a'); a.href = url; a.download = 'concurrency_summary.csv'; document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
-    });
+
 
     let chart = null;
     function renderChart(){
       const labels = rows.map(r=>r.Model);
       const datasets = [
+        {label:'Compilation Errors', data:rows.map(r=>r.CompilationErrors), backgroundColor:'#e91e63'},
         {label:'Deadlock', data:rows.map(r=>r.Deadlock), backgroundColor:'#f44336'},
         {label:'Race Condition', data:rows.map(r=>r.RaceCondition), backgroundColor:'#ff9800'},
-        {label:'Single Thread', data:rows.map(r=>r.SingleThread), backgroundColor:'#4caf50'},
+        {label:'Starvation', data:rows.map(r=>r.Starvation), backgroundColor:'#ffeb3b'},
         {label:'Uncaught Exception', data:rows.map(r=>r.RuntimeException), backgroundColor:'#2196f3'},
         {label:'No Entry Method', data:rows.map(r=>r.NoEntryMethod), backgroundColor:'#9c27b0'},
+        {label:'Single Thread', data:rows.map(r=>r.SingleThread), backgroundColor:'#4caf50'},
         {label:'Termination Error', data:rows.map(r=>r.TerminationError), backgroundColor:'#607d8b'}
       ];
       const ctx = document.getElementById('stackedChart');
